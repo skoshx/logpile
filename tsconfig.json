@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "node",
+    "module": "ES2020",
+    "resolveJsonModule": true,
+    "noFallthroughCasesInSwitch": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "target": "es2021"
+  },
+  "include": ["src/", "test/"]
+}
