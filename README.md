@@ -5,7 +5,7 @@
 > 🪵 A simple & tiny logging library with supercharged search features
 
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/skoshx/logpile/blob/main/LICENSE.md)
-[![CI](https://github.com/skoshx/hidden-secrets/actions/workflows/ci.yml/badge.svg)](https://github.com/skoshx/logpile/actions/workflows/ci.yml)
+[![CI](https://github.com/skoshx/logpile/actions/workflows/ci.yml/badge.svg)](https://github.com/skoshx/logpile/actions/workflows/ci.yml)
 [![prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 [![jest](https://jestjs.io/img/jest-badge.svg)](https://github.com/facebook/jest)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/skoshx/logpile/blob/main/README.md)
