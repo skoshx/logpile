@@ -14,7 +14,7 @@ import { removeCirculars } from '../src/circular';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const TEN_LOGS = getTestLogs(10);
+const THOUSAND_LOGS = getTestLogs(1_000);
 const MILLION_LOGS = getTestLogs(1_000_000);
 const TEN_MILLION_LOGS = getTestLogs(10_000_000);
 
@@ -85,7 +85,7 @@ test.todo('saving warning logs to file');
 test.todo('saving logs to stdout');
 
 test('searching logs by object', (t) => {
-  const testLogs = clone(MILLION_LOGS);
+  const testLogs = clone(THOUSAND_LOGS);
   testLogs.splice(getRandomInt(0, testLogs.length), 1, testLog);
 
   const startTime = Date.now();
@@ -97,7 +97,7 @@ test('searching logs by object', (t) => {
 });
 
 test('searching returns multiple objects', (t) => {
-  const testLogs: LogEntry[] = clone(MILLION_LOGS);
+  const testLogs: LogEntry[] = clone(THOUSAND_LOGS);
   testLogs.splice(getRandomInt(0, testLogs.length), 1, testLog, testLog);
 
   const foundLogs = _searchLogs(
@@ -108,7 +108,7 @@ test('searching returns multiple objects', (t) => {
 });
 
 test('searching logs by string', (t) => {
-  const testLogs = clone(MILLION_LOGS);
+  const testLogs = clone(THOUSAND_LOGS);
   testLogs.splice(getRandomInt(0, testLogs.length), 1, testLog);
 
   const startTime = Date.now();
@@ -118,7 +118,7 @@ test('searching logs by string', (t) => {
 });
 
 test('searching logs by time', (t) => {
-  const testLogs = clone(MILLION_LOGS);
+  const testLogs = clone(THOUSAND_LOGS);
   testLogs.splice(getRandomInt(0, testLogs.length), 1, testLog);
 
   const sortedLogs = testLogs.filter(
