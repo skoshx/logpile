@@ -1,4 +1,4 @@
-import { LogEntry, LogLevel } from "../src";
+import { LogEntry, LogLevel } from '../src';
 
 const levels: LogLevel[] = [
   'emergency',

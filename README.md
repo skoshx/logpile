@@ -41,8 +41,8 @@ $ npm install --save logpile
 import { createLogger } from 'logpile';
 
 const logger = createLogger({
-  persist: [consolePersist({ level: 'error' }), filePersist({})],
-  retrieve: fileRetrieve({})
+  persist: [consolePersist({ level: 'error' }), filePersist()],
+  retrieve: fileRetrieve(),
 });
 
 // you can pass anything to the function

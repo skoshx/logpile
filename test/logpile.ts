@@ -1,8 +1,8 @@
 import test from 'ava';
 import { clone } from 'lodash-es';
 import { getRandomInt, getTestLogs, testLog } from './_util';
-import { fileURLToPath } from 'url'
-import { dirname, join } from 'path'
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
 import { getLogger, getLogObject, LogEntry } from '../src';
 import { _searchLogs } from '../src/search';
 import { filePersist, fileRetrieve, getLogsFromFile } from '../src/persist';
@@ -22,7 +22,9 @@ const mockError = { name: 'Bad Request' };
 
 test.after.always('cleanup files', () => {
   tryCatchSync(() => unlinkSync(join(__dirname, 'test-log.log')));
-  tryCatchSync(() => unlinkSync(join(__dirname, 'saving-logs-to-file-test.log')));
+  tryCatchSync(() =>
+    unlinkSync(join(__dirname, 'saving-logs-to-file-test.log')),
+  );
 });
 
 test('creating logs works with multiple messages', (t) => {
@@ -59,18 +61,22 @@ test('saving logs to file', (t) => {
   const testFilePath = join(__dirname, 'saving-logs-to-file-test.log');
   const logger = getLogger({
     persist: [filePersist({ filePath: testFilePath })],
-    retrieve: fileRetrieve({ filePath: testFilePath })
+    retrieve: fileRetrieve({ filePath: testFilePath }),
   });
   const timestamp = new Date().toISOString();
-  logger.error('some error occurred', { error: mockError }, 'some id', { timestamp });
+  logger.error('some error occurred', { error: mockError }, 'some id', {
+    timestamp,
+  });
 
-  t.deepEqual(getLogsFromFile(testFilePath), [{
-    level: 'error',
-    message: 'some error occurred',
-    message2: 'some id',
-    error: mockError,
-    timestamp
-  }]);
+  t.deepEqual(getLogsFromFile(testFilePath), [
+    {
+      level: 'error',
+      message: 'some error occurred',
+      message2: 'some id',
+      error: mockError,
+      timestamp,
+    },
+  ]);
 });
 
 test.todo('saving error logs to file');
@@ -94,7 +100,10 @@ test('searching returns multiple objects', (t) => {
   const testLogs: LogEntry[] = clone(MILLION_LOGS);
   testLogs.splice(getRandomInt(0, testLogs.length), 1, testLog, testLog);
 
-  const foundLogs = _searchLogs(testLogs, '2c356c57-42d4-41b0-a2ec-76269119a371');
+  const foundLogs = _searchLogs(
+    testLogs,
+    '2c356c57-42d4-41b0-a2ec-76269119a371',
+  );
   t.deepEqual(foundLogs, [testLog, testLog]);
 });
 
@@ -112,7 +121,9 @@ test('searching logs by time', (t) => {
   const testLogs = clone(MILLION_LOGS);
   testLogs.splice(getRandomInt(0, testLogs.length), 1, testLog);
 
-  const sortedLogs = testLogs.filter((log) => new Date(log.timestamp) > new Date(Date.now() - ms('1h')));
+  const sortedLogs = testLogs.filter(
+    (log) => new Date(log.timestamp) > new Date(Date.now() - ms('1h')),
+  );
   const foundLogs = _searchLogs(testLogs, null, { time: '1h' });
 
   t.deepEqual(foundLogs, sortedLogs);
@@ -125,7 +136,7 @@ test('circulars are removed from logs', (t) => {
   const x = removeCirculars(circularObject);
   t.deepEqual(x, {
     a: 2,
-    b: '[Circular]'
+    b: '[Circular]',
   });
 });
 

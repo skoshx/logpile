@@ -12,7 +12,7 @@ export interface SearchOptions {
    * Returns logs that have occurred withing `time` amount before now. For example, to get all logs
    * from one hour ago to now, use `{ time: '1h' }`
    * A time string defined by Vercel's `ms` package.
-   * 
+   *
    * @example
    * ```javascript
    * // Search logs containing value `some identifier` that have happened in the last hour
@@ -68,11 +68,22 @@ export function _searchLogs<T = unknown>(
 ): LogEntry<T>[] {
   let foundLogs: LogEntry<T>[] = [];
 
-  // @ts-ignore - filter for search
-  if (search) foundLogs = filter<LogEntry<T>[]>(logs, (log: LogEntry<T>) => searchTree<LogEntry<T>>(log, search, options));
+  if (search) {
+    // @ts-ignore - filter for search
+    foundLogs = filter<LogEntry<T>[]>(logs, (log: LogEntry<T>) =>
+      searchTree<LogEntry<T>>(log, search, options),
+    );
+  }
 
-  // @ts-ignore - filter for time
-  if (options?.time) foundLogs = filter<LogEntry<T>[]>(logs, (log: LogEntry<T>) => new Date(log.timestamp) > new Date(Date.now() - ms(options.time as StringValue)));
+  if (options?.time) {
+    // @ts-ignore - filter for time
+    foundLogs = filter<LogEntry<T>[]>(
+      logs,
+      (log: LogEntry<T>) =>
+        new Date(log.timestamp) >
+        new Date(Date.now() - ms(options.time as StringValue)),
+    );
+  }
 
   return foundLogs ?? [];
 }
