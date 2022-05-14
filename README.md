@@ -1,5 +1,5 @@
 <p align="center">
-<img src="docs/hidden-secrets-logo.png" />
+<img src="docs/logpile-logo.png" />
 </p>
 
 > 🪵 A simple & tiny logging library with supercharged search features
