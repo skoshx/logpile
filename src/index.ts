@@ -1,6 +1,6 @@
 import { LogMedium } from './persist';
-import { SearchOptions, _searchLogs } from './search';
-import { LogEntry, LogLevel, TypeOrPrimitives } from './types';
+import { _searchLogs } from './search';
+import { LogEntry, LogLevel, TypeOrPrimitives, SearchOptions } from './types';
 
 export function getLogObject<T = unknown>(
   level: LogLevel,
