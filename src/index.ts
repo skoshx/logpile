@@ -108,6 +108,7 @@ export function getLogger<LogType = unknown>(medium: LogMedium<LogType>) {
   }
 
   return {
+    persist,
     emergency,
     emerg,
     alert,
