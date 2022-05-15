@@ -126,3 +126,4 @@ export function getLogger<LogType = unknown>(medium: LogMedium<LogType>) {
 // Export types
 export * from './types';
 export * from './persist';
+export * from './util';
