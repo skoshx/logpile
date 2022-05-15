@@ -1,6 +1,6 @@
 {
   "name": "logpile",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "🪵 A simple & tiny logging library with supercharged search features",
   "repository": "skoshx/logpile",
   "main": "./dist/index.cjs",
