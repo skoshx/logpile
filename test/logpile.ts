@@ -57,10 +57,10 @@ test('creating logs works with any object', (t) => {
   });
 });
 
-test('saving logs to file', (t) => {
+test('saving logs to file', async (t) => {
   const testFilePath = join(__dirname, 'saving-logs-to-file-test.log');
   const logger = getLogger({
-    persist: [filePersist({ filePath: testFilePath })],
+    persist: [await filePersist({ filePath: testFilePath })],
     retrieve: fileRetrieve({ filePath: testFilePath }),
   });
   const timestamp = new Date().toISOString();
@@ -68,7 +68,7 @@ test('saving logs to file', (t) => {
     timestamp,
   });
 
-  t.deepEqual(getLogsFromFile(testFilePath), [
+  t.deepEqual(await getLogsFromFile(testFilePath), [
     {
       level: 'error',
       message: 'some error occurred',

@@ -1,4 +1,3 @@
-import { appendFileSync, readFileSync, writeFileSync } from 'fs';
 import { removeCirculars } from './circular';
 import { LogEntry, LogLevel } from './types';
 import {
@@ -59,9 +58,10 @@ export function consolePersist<T = unknown>(
   };
 }
 
-export function filePersist<T = unknown>(
+export async function filePersist<T = unknown>(
   opts: FilePersistOptions = {},
-): PersistLogFunction<T> {
+): Promise<PersistLogFunction<T>> {
+  const { appendFileSync } = await import('fs');
   return async (log: LogEntry<T>) => {
     const logLevelNumber = getLogLevelNumber(log.level);
     if (logLevelNumber > getLogLevelNumber(opts?.level ?? 'debug'))
@@ -108,7 +108,10 @@ interface FilePersistOptions extends PersistOptions {
   filePath?: string;
 }
 
-export function getLogsFromFile<T = unknown>(filePath: string): LogEntry<T>[] {
+export async function getLogsFromFile<T = unknown>(
+  filePath: string,
+): Promise<LogEntry<T>[]> {
+  const { readFileSync } = await import('fs');
   const { data: file, error } = tryCatchSync(() =>
     readFileSync(filePath, 'utf-8'),
   );
@@ -131,12 +134,12 @@ export function fileRetrieve<T = unknown>(
     const logs: LogEntry<T>[] = [];
 
     if (opts.errorFilePath)
-      logs.push(...getLogsFromFile<T>(opts.errorFilePath));
+      logs.push(...(await getLogsFromFile<T>(opts.errorFilePath)));
     if (opts.verboseFilePath)
-      logs.push(...getLogsFromFile<T>(opts.verboseFilePath));
+      logs.push(...(await getLogsFromFile<T>(opts.verboseFilePath)));
     if (opts.warningFilePath)
-      logs.push(...getLogsFromFile<T>(opts.warningFilePath));
-    if (opts.filePath) logs.push(...getLogsFromFile<T>(opts.filePath));
+      logs.push(...(await getLogsFromFile<T>(opts.warningFilePath)));
+    if (opts.filePath) logs.push(...(await getLogsFromFile<T>(opts.filePath)));
 
     return logs;
   };

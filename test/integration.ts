@@ -26,7 +26,7 @@ test.after.always('cleanup files', () => {
 test('creating logs & searching them', async (t) => {
   const testFilePath = join(__dirname, 'creating-logs-searching-them.log');
   const logger = getLogger({
-    persist: [filePersist({ filePath: testFilePath })],
+    persist: [await filePersist({ filePath: testFilePath })],
     retrieve: fileRetrieve({ filePath: testFilePath }),
   });
   const timestamp = new Date().toISOString();
