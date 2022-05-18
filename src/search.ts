@@ -1,4 +1,5 @@
-import { filter, isEqual, pick } from 'lodash-es';
+// import { filter, isEqual, pick } from 'lodash';
+import _ from 'lodash';
 import { LogEntry, SearchOptions } from './types';
 import ms, { StringValue } from 'ms';
 
@@ -7,8 +8,8 @@ const isObject = (obj: any) =>
 
 function searchMatchesTree<T = unknown>(tree: T, search: object): boolean {
   if (Object.keys(search ?? {}).length === 0) return false;
-  const pickedValues = pick(tree, Object.keys(search ?? {}));
-  return isEqual(pickedValues, search);
+  const pickedValues = _.pick(tree, Object.keys(search ?? {}));
+  return _.isEqual(pickedValues, search);
 }
 
 export function searchTree<T = unknown>(
@@ -16,7 +17,7 @@ export function searchTree<T = unknown>(
   search: string | object,
   options?: Partial<SearchOptions>,
 ): T | null {
-  if (isEqual(tree, search)) return tree;
+  if (_.isEqual(tree, search)) return tree;
   if (typeof search === 'object' && searchMatchesTree(tree, search as object))
     return tree;
 
@@ -25,7 +26,7 @@ export function searchTree<T = unknown>(
   for (let i = 0; i < keys.length && !result; i++) {
     // @ts-ignore
     const value = tree[keys[i]];
-    if (isEqual(value, search)) result = tree;
+    if (_.isEqual(value, search)) result = tree;
     if (typeof search === 'object' && searchMatchesTree(tree, search as object))
       result = tree;
     if (result === null && isObject(value) && !options?.shallow)
@@ -49,14 +50,14 @@ export function _searchLogs<T = unknown>(
 
   if (search) {
     // @ts-ignore - filter for search
-    foundLogs = filter<LogEntry<T>[]>(logs, (log: LogEntry<T>) =>
+    foundLogs = _.filter<LogEntry<T>[]>(logs, (log: LogEntry<T>) =>
       searchTree<LogEntry<T>>(log, search, options),
     );
   }
 
   if (options?.time) {
     // @ts-ignore - filter for time
-    foundLogs = filter<LogEntry<T>[]>(
+    foundLogs = _.filter<LogEntry<T>[]>(
       logs,
       (log: LogEntry<T>) =>
         new Date(log.timestamp) >

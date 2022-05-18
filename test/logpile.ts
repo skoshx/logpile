@@ -1,12 +1,13 @@
 import test from 'ava';
-import { clone } from 'lodash-es';
+// import { clone } from 'lodash-es';
+import _ from 'lodash';
 import { getRandomInt, getTestLogs, testLog } from './_util';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import { getLogger, getLogObject, LogEntry } from '../src';
 import { _searchLogs } from '../src/search';
 import { filePersist, fileRetrieve, getLogsFromFile } from '../src/persist';
-import { readFileSync, unlinkSync } from 'fs';
+import { unlinkSync } from 'fs';
 import { tryCatchSync } from '../src/util';
 import ms from 'ms';
 import { removeCirculars } from '../src/circular';
@@ -85,7 +86,7 @@ test.todo('saving warning logs to file');
 test.todo('saving logs to stdout');
 
 test('searching logs by object', (t) => {
-  const testLogs = clone(THOUSAND_LOGS);
+  const testLogs = _.clone(THOUSAND_LOGS);
   testLogs.splice(getRandomInt(0, testLogs.length), 1, testLog);
 
   const startTime = Date.now();
@@ -97,7 +98,7 @@ test('searching logs by object', (t) => {
 });
 
 test('searching returns multiple objects', (t) => {
-  const testLogs: LogEntry[] = clone(THOUSAND_LOGS);
+  const testLogs: LogEntry[] = _.clone(THOUSAND_LOGS);
   testLogs.splice(getRandomInt(0, testLogs.length), 1, testLog, testLog);
 
   const foundLogs = _searchLogs(
@@ -108,7 +109,7 @@ test('searching returns multiple objects', (t) => {
 });
 
 test('searching logs by string', (t) => {
-  const testLogs = clone(THOUSAND_LOGS);
+  const testLogs = _.clone(THOUSAND_LOGS);
   testLogs.splice(getRandomInt(0, testLogs.length), 1, testLog);
 
   const startTime = Date.now();
@@ -118,7 +119,7 @@ test('searching logs by string', (t) => {
 });
 
 test('searching logs by time', (t) => {
-  const testLogs = clone(THOUSAND_LOGS);
+  const testLogs = _.clone(THOUSAND_LOGS);
   testLogs.splice(getRandomInt(0, testLogs.length), 1, testLog);
 
   const sortedLogs = testLogs.filter(
